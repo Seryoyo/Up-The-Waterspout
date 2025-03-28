@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Up-The-Waterspout.sln"
+    "dotnet.defaultSolution": "Up The Waterspout.sln"
 }
