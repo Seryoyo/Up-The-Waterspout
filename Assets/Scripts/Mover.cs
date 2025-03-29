@@ -21,6 +21,7 @@ public class Mover : MonoBehaviour
     {
 
         Run();
+        FlipSprite();
         
     }
 
@@ -34,4 +35,14 @@ public class Mover : MonoBehaviour
         Vector2 playerVelocity = new Vector2 (moveInput.x * runSpeed, rb.linearVelocity.y);
         rb.linearVelocity = playerVelocity;
     }
+
+  void FlipSprite(){
+
+        bool playerHasHorizSpeed = Mathf.Abs(rb.linearVelocity.x) > 0;
+
+        if(playerHasHorizSpeed){
+            transform.localScale = new Vector2 (Mathf.Sign(rb.linearVelocity.x), 1f);
+        }
+
+    } 
 }
