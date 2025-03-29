@@ -6,14 +6,19 @@ using UnityEngine.InputSystem;
 public class Mover : MonoBehaviour
 {
     [SerializeField] float runSpeed = 4f;
+    [SerializeField] float jumpSpeed = 5f;
 
     Vector2 moveInput;
     Rigidbody2D rb;
+    CapsuleCollider2D myBodyCollider;
+    BoxCollider2D myFeetCollider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        myBodyCollider = GetComponent<CapsuleCollider2D>();
+        myFeetCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -31,6 +36,17 @@ public class Mover : MonoBehaviour
 
     }
 
+    void OnJump(InputValue value){
+
+        if(!myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){return;}
+        if(value.isPressed){
+
+            rb.linearVelocity += new Vector2 (0f, jumpSpeed);
+
+        }
+        
+    }
+
     void Run(){
         Vector2 playerVelocity = new Vector2 (moveInput.x * runSpeed, rb.linearVelocity.y);
         rb.linearVelocity = playerVelocity;
@@ -45,4 +61,5 @@ public class Mover : MonoBehaviour
         }
 
     } 
+
 }
