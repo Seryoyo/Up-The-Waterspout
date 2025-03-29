@@ -1,28 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Mover : MonoBehaviour
 {
+    [SerializeField] float runSpeed = 4f;
 
-    [SerializeField] float walkSpeed = 1.0f;
-    float moveInput;
-    [SerializeField] float jumpSpeed = 1.0f;
-    float jumpInput;
-
+    Vector2 moveInput;
+    Rigidbody2D rb;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveInput = Input.GetAxis("Horizontal") * walkSpeed * Time.deltaTime;
-        jumpInput = Input.GetAxis("Vertical") * walkSpeed * Time.deltaTime;
-        transform.Translate(moveInput, 0, 0);
-        transform.Translate(0, jumpInput, 0);
 
+        Run();
         
+    }
+
+    void OnMove(InputValue value){
+
+        moveInput = value.Get<Vector2>();
+
+    }
+
+    void Run(){
+        Vector2 playerVelocity = new Vector2 (moveInput.x * runSpeed, rb.linearVelocity.y);
+        rb.linearVelocity = playerVelocity;
     }
 }
